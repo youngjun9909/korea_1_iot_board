@@ -39,6 +39,25 @@ interface LoginState {
   password: string;
 }
 
+const inputSt = {
+  width: "200px",
+  borderRadius: "20px",
+  padding: "10px",
+  margin: "5px",
+  backgroundColor: "#eee",
+  border: "none"
+}
+
+const btn = {
+  width: "200px",
+  borderRadius: "20px",
+  padding: "5px",
+  border: "none",
+  backgroundColor: "#03c75a",
+  color: "white"
+}
+
+
 export default function A_useState() {
   const [count, setCount] = useState<number>(0);
 
@@ -102,7 +121,7 @@ export default function A_useState() {
             onChange={handleInputChange}
             placeholder="이메일을 입력하세요."
             required
-          />
+          style={inputSt}/>
         </div>
         <div>
           <label htmlFor="password">패스워드</label>
@@ -114,9 +133,9 @@ export default function A_useState() {
             onChange={handleInputChange}
             placeholder="비밀번호를 입력하세요."
             required
-          />
+          style={inputSt}/>
         </div>
-        <button type="submit">로그인</button>
+        <button type="submit" style={btn}>로그인</button>
       </form>
     </>
   );

@@ -1,5 +1,7 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
+import { AUTH_PATH } from '../../constants';
+import Footer from '../Footer';
 
 /* 
   ! Outlet 컴포넌트
@@ -10,6 +12,15 @@ import { Outlet } from 'react-router-dom'
 
 */
 export default function Container() {
+
+  // useLocation
+  // : 리액트 라우터 라이브러리에서 제공하는 훅(Hook)
+  // - 현재 페이지의 정보를 가져옴 (현재 경로, 쿼리 파라미터 등)
+// const  pathname  = useLocation();
+// location.pathname : 현재 경로
+
+  const {pathname} = useLocation();
+
   return (
     <>
       {/* <Header /> */}
@@ -17,7 +28,16 @@ export default function Container() {
       {/* 자식 컴포넌트가 해당 위치에서 렌더링 */}
         <Outlet/> 
         
-      {/* <Footer/> */}
+      {/* 
+        현재 경로가 AUTH_PATH (로그인, 회원가입)이 아니면 Footer표시 
+        : 논리 연산자
+        >> true && 논리 연산자 뒤의 값을 "해석"
+        >> false && 논리 연산자 뒤의 값 "해석 x"
+        
+      */}
+      <hr />
+      {pathname !== AUTH_PATH && <Footer/> }
+      
     </>
   )
 }

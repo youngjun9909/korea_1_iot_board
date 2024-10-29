@@ -8,6 +8,7 @@ export const tmp = '';
 
   : react-cookie
   - npm install react-cookie
+  - npm i --save @type/react-cookie
 
   : axios
   - npm install axios
