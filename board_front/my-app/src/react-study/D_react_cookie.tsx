@@ -1,4 +1,6 @@
 import React from 'react'
+import { useCookies } from 'react-cookie'
+import { btn } from './C_StateEffect';
 
 /*
 ! react-cookie
@@ -8,12 +10,65 @@ import React from 'react'
 <<설치 명령어>>
 - npm install react-cookie
 - npm i --save @type/react-cookie
+
+<<기본 사용법>>
+react-cookie는 useCookies 훅을 통해
+쿠키(cookies), 쿠키 설정 함수(setCookie), 쿠기 제거 함수(removeCookie)를 반환
+
+const [ cookies, setCookie, removeCookie] = useCookies(['쿠키 이름']);
+
+cf) useCookies 훅에 전달되는 배열(인자값)
+  : 배열로써 관리하고자 하는 쿠기의 이름을 전달
+  : 사용자가 현재 컴포넌트에서 접근하려는 쿠키 이름을 지정하는 역할
+  - 쿠키에 대한 접근: cookies.쿠키이름 을 통해 쿠키값 반환
 */
 
 export default function D_react_cookie() {
-  return (
-    <>
+  // 'user'라는 이름의 쿠키를 관리
+  const [ cookies, setCookie, removeCookie] = useCookies(['user']);
+  
+  // 쿠키 설정 함수
+  const handleSetCookie = () => {
+    // setCookie('쿠키이름', '쿠키값', '옵션설정(선택)')
+    setCookie('user', '박영준', {
+      path: '/',
+      // new Date : 새로운 날짜 지정
+      // Date.now() : 현재 날짜를 반환
+      // - 1000 * 60 * 60 * 24 (1일)
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
+    })
+  }
 
-    </>
+  // 쿠키 삭제 함수
+  const handleRemoveCookie = () => {
+    // removeCookie('쿠키이름', '옵션설정(선택)')
+    removeCookie('user', {path: '/'})
+  }
+
+  //? react-cookie 옵션 설정 (선택)
+  /*
+    path: 쿠키가 유효한 경로를 지정
+    - 주로 '/'를 설정하여 모든 경로에서 유효하도록 쿠키를 설정
+
+    expires: 쿠키의 만료 시간을 
+      - 현재 시점부터 특정 시간 경과 후 만료
+
+    maxAge: 쿠키의 유효시간을 초 단위로 설정
+      - 현재 시간부터 지정한 시간 동안 쿠키가 유지 
+      (생성된 지점으로부터 시간을 기준으로 유효 시간 설정)
+
+
+    secure: true로 설정 시 HTTPS에서만 쿠키가 전송
+
+    sameSite: 쿠키가 전송 될 조건을 제한
+    - 'strict' 속성을 사용하여 다른 사이트에서의 요청은 쿠키가 포함되지 않도록 제한
+  */
+  return (
+    <div>
+      User Cookie: {cookies.user} 
+      <br />
+      <button style={btn} onClick={handleSetCookie}>쿠키 설정 버튼</button>
+      <button style={btn} onClick={handleRemoveCookie}>쿠키 삭제 버튼</button>
+    </div>
   )
 }

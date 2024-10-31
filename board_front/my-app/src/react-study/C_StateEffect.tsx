@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const btn = {
-  width: "70px",
+export const btn = {
   hight: "30px",
   border: "none",
   borderRadius:"10px",
