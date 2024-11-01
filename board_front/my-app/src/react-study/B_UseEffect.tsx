@@ -47,9 +47,6 @@ export default function B_UseEffect() {
     return () => clearInterval(interval);
   },[isRunning]) // 1000 밀리초(1초)에 한 번씩 첫 번째 인자의 함수 실행
 
-  const handleClick = () => {
-    setIsRunning(prev => !prev);
-  }
 
   return (
     <>

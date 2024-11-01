@@ -3,7 +3,8 @@ import UseState from '../../react-study/A_useState';
 import UseEffect from '../../react-study/B_UseEffect';
 import StateEffect from '../../react-study/C_StateEffect'
 import Cookie from '../../react-study/D_react_cookie'
-import Book from '../../react-study/Book';
+import Zustand from '../../react-study/E_Zustand';
+import ZustandRender from '../../react-study/E_zustand_render';
 
 export default function ReactStudy() {
   return (
@@ -16,8 +17,9 @@ export default function ReactStudy() {
       <StateEffect />
       <h2>React-Cookie 상태관리</h2>
       <Cookie />
-      <h2>Book</h2>
-      <Book />
+      <h2>Zustand</h2>
+      <Zustand />
+      <ZustandRender/>
     </>
   )
 }
