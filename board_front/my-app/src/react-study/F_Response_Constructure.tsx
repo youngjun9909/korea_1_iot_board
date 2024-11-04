@@ -1,4 +1,5 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect } from 'react'
 
 
 /*
@@ -21,11 +22,50 @@ import React from 'react'
 
   response.data.data
 
-  1) 구조
+  1) response 구조
+  - axios가 HTTP 응답을 처리한 후 반환하는 객체
+  - response.status: HTTP 상태 코드 (200, 204)
+  - response.statusText: 상태 텍스트 ("OK", "NOT FOUND" 등)
+  - response.headers: 응답 헤더 정보
+  - response.config: 응답 설정 정보
+  - response.data: 서버에서 전송한 응답 데이터
+
+  2) response.data 구조
+  : 백엔드의 전체 ResponseDto 객체를 가리킴
+  - 실제 데이터를 data 필드로 감싸고 있음
 
 */
 
 export default function F_Response_Constructure() {
+
+  //* function : 로그인 성공 시 실행되는 함수
+  const signInSuccessResponse = (data: any) => {
+    
+  }
+
+  // 로그인 버튼 클릭 이벤트 처리 함수
+  const handleSignIn = async() => {
+    const credentials = {
+      email: "gktpdy12",
+      password: "dkssud12"
+    };
+    
+    if(!credentials.email || !credentials.password) {
+      console.error("아이디, 비밀번호를 모두 입력해주세요");
+      return;
+    }
+
+    try{
+      const response = await axios.post(`http://localhost:8080/api/v1/auth/signIn`, credentials)
+      if(response.status === 200) {
+        // 응답에 대한 상태가 200 ok 일 경우
+        signInSuccessResponse(response.data.data);
+      }
+    }catch(e) {
+      console.error("로그인 에러", e);
+    }
+  }
+
   return (
     <div>F_Response_Constructure</div>
   )

@@ -41,7 +41,6 @@ export default function Container() {
           color: theme === 'light' ? 'black' : 'white',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
           justifyContent: 'center',
           padding: 2
         }}

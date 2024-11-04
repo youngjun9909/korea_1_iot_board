@@ -9,3 +9,4 @@ export const BOARD_WRITE_PATH = "/board/write";
 export const BOARD_UPDATE_PATH = (boardNumber: number | string) => `/board/update/${boardNumber}`;
 export const USER_PATH = "/user";
 export const REACT_STUDY_PATH = "/react-study";
+export const TODO_PATH = '/todo';
