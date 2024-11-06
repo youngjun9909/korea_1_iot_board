@@ -5,6 +5,8 @@ import StateEffect from '../../react-study/C_StateEffect'
 import Cookie from '../../react-study/D_react_cookie'
 import Zustand from '../../react-study/E_Zustand';
 import ZustandRender from '../../react-study/E_zustand_render';
+import Emotion1 from '../../react-study/G_Emotion';
+import Emotion2 from '../../react-study/H_Emotion2';
 
 export default function ReactStudy() {
   return (
@@ -20,6 +22,10 @@ export default function ReactStudy() {
       <h2>Zustand</h2>
       <Zustand />
       <ZustandRender/>
+
+      <h2>Emotion : 스타일 라이브러리</h2>
+      <Emotion1 />
+      <Emotion2 />
     </>
   )
 }

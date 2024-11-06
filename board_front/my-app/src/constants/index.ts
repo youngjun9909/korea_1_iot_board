@@ -10,3 +10,4 @@ export const BOARD_UPDATE_PATH = (boardNumber: number | string) => `/board/updat
 export const USER_PATH = "/user";
 export const REACT_STUDY_PATH = "/react-study";
 export const TODO_PATH = '/todo';
+export const BOARD_LIST_PATH = '/board';

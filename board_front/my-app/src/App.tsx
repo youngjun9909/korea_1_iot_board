@@ -5,13 +5,14 @@ import './App.css';
 import UseState from './react-study/A_useState';
 import { Route, Routes } from 'react-router-dom';
 import Container from './layouts/Container';
-import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, REACT_STUDY_PATH, USER_PATH, TODO_PATH } from './constants';
+import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, REACT_STUDY_PATH, USER_PATH, TODO_PATH, BOARD_LIST_PATH } from './constants';
 import Main from './views/Main';
 import Authentication from './views/Authentication';
 import Board from './views/Board';
 import User from './views/User';
 import ReactStudy from './views/ReactStudy';
 import Todo from './views/Todo';
+import BoardList from "./views/Board/index"
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
 
           {/* 로그인 + 회원가입 페이지 */}
           <Route path={AUTH_PATH} element={<Authentication />}/>
+
+          {/* 게시물 리스트 화면 */}
+          <Route path={BOARD_LIST_PATH} element={<BoardList />} />
 
           {/* 게시물 상세 보기 */}
           <Route path={BOARD_DETAIL_PATH(':boardNumber')} element={<Board />}/>

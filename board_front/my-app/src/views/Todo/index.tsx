@@ -34,6 +34,7 @@ export default function Index() {
     setTasks(tasks.filter(t => t.id !== task.id));
   };
 
+
   return (
     <div className='todo-container'>
       <Clock />

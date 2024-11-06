@@ -1,19 +1,19 @@
-import { Box, Button, Card, CardActions, CardContent, TextField, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../../stroes/auth.store';
 
+//* Interface *//
 // 사용자 입력 정보의 상태를 나타냄
-// Credentials
-// : 자격증, 신원 정보
+// credential: 자격증, 신원 정보
 interface Credentials {
   email: string;
   password: string;
 }
 
-// 로그인 후 전역 상태에 저장될 사용자 데이터
+// 로그인 후 전역 상태에 저장될 사용자 데이터를 나타냄
 interface UserAuthData {
   id: number;
   email: string;
@@ -26,31 +26,62 @@ interface SignInResponseDto {
   exprTime: number;
 }
 
-// * MainComponent 로그인 컴포넌트
+//* Main Component: 로그인 컴포넌트 *//
 export default function SignIn() {
+  //* State *//
   // == 로그인 된 사용자 상태를 컴포넌트 내에서 관리하는 state ==
   // const [user, setUser] = useState<Credentials>({
   //   email: '',
   //   password: ''
   // });
-
-  //* state: 로그인 입력필드 상태
+  
+  // state: 로그인 입력 필드 상태 //
   const [credentials, setCredentials] = useState<Credentials>({
     email: '',
     password: ''
   });
 
-  //* 오류 메시지 저장 상태
-  const [errors, setErrors] = useState<string>('');
+  // state: 오류 메시지를 저장할 상태 //
+  const [error, setError] = useState<string>('');
 
-  //* state : React Cookie 훅을 사용하여 쿠키를 설정하는 함수
+  // state: React Cookie 훅을 사용하여 쿠키를 설정하는 함수 //
   const [, setCookies] = useCookies(['token']);
 
-  // state: useUserStore() 훅을 사용하여 사용자 정보를 전역 상태에 저장
-  const { login, logout } = useAuthStore();
+  // state: useUserStore() 훅을 사용하여 사용자 정보를 전역 상태에 저장 //
+  const { login } = useAuthStore();
 
+  //* Hooks: 기능 정의 *//
+  //# function: 페이지 전환 //
+  const navigate = useNavigate();
 
+  //# function: 로그인 성공 시 실행되는 함수 //
+  // 로그인 성공 시 실행
+  // : 서버 응답이 성공일 경우 토큰과 사용자 정보를 저장 & 페이지 이동
+  const signInSuccessResponse = (data: SignInResponseDto) => {
+    if (data) {
+      const { token, exprTime, user } = data;
+      setToken(token, exprTime);
+      login({
+        id: user.id,
+        name: user.email
+      });
+      navigate('/board');
+    } else {
+      setError('로그인 실패: 인증 정보를 확인해주세요.');
+    }
+  }
 
+  //# function: 인증 토큰을 저장하는 함수 //
+  const setToken = (token: string, exprTime: number) => {
+    const expires = new Date(Date.now() + exprTime);
+    setCookies('token', token, {
+      path: '/',
+      expires
+    });
+  };
+
+  //* Event Handler *//
+  //# event handler: 로그인 입력 필드 입력 이벤트 처리 함수 //
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const element = e.target;
 
@@ -60,63 +91,33 @@ export default function SignIn() {
     });
   }
 
+  //# event handler: 로그인 버튼 클릭 이벤트 처리 함수 //
+  const handleSignIn = async () => {
 
-  
-  const handleSignIn = async() => {
-      const {email, password} = credentials;
-      // 이메일 O / 비밀번호 O : true >> 실행 X
-      // 이메일 X / 비밀번호 O : false >> 실행 O
-      // 이메일 O / 비밀번호 X : false >> 실행 O
-      // 이메일 X / 비밀번호 X : false >> 실행 O
-      
-      if(!email || !password) {   
-        setErrors('아이디와 비밀번호를 모두 입력해주세요')
-        return;
-      }
+    const { email, password } = credentials;
 
-      try{
-        const response = await axios.post('http://localhost:8080/api/v1/auth/signIn', credentials);
-        
-        if(response.data) {
-          signInSuccessResponse(response.data.data);
-        }
-
-      }catch{
-        setErrors("로그인 실패")
-      }
-  }
-
-  const navigate = useNavigate();
-
-
-  //* function : 로그인 성공 시 실행되는 함수
-  // 로그인 성공 시 실행
-  // 서버응답이 성공일 경우 토큰과 사용자 정보를 젖ㅇ & 페이지 이동
-  const signInSuccessResponse = (data: SignInResponseDto) => {
-    if(data) {
-      const { token, exprTime, user } = data;
-      setToken(token, exprTime); 
-      login({
-        id: user.id,
-        name: user.email
-      });
-      navigate('/');
-    }else {
-      setErrors("로그인 실패: 인증 정보를 확인해주세요.")
+    // 이메일 O + 비밀번호 O : false > 실행 X
+    // 이메일 X + 비밀번호 O : true > 실행 O
+    // 이메일 O + 비밀번호 X : true > 실행 O
+    // 이메일 X + 비밀번호 X : true > 실행 O
+    if (!email || !password) {
+      setError('아이디와 비밀번호를 모두 입력해주세요.');
+      return;
     }
-  }
 
-  const setToken = (token: string, exprTime: number) => {
-    const expires = new Date(Date.now() + exprTime);
-    setCookies('token', token, {
-      path: '/',
-      expires
-    });
+    try {
+      const response = await axios.post(`http://localhost:8080/api/v1/auth/signIn`, credentials);
+
+      if (response.data) {
+        signInSuccessResponse(response.data.data);
+      }
+
+    } catch {
+      setError('로그인 중 문제가 발생했습니다.');
+    }
   };
 
-
-
-  // render: 로그인 컴포넌트 렌더링
+  //# render: 로그인 컴포넌트 렌더링 //
   return (
     <Card variant='outlined' sx={{
       width: 360,
@@ -125,12 +126,12 @@ export default function SignIn() {
     }}>
       <CardContent>
         <Typography variant='h5' mb={2}>
-          로그인
+          로그인 
         </Typography>
-        {/* <Header>{user.email}</Header> */}
 
+        {/* 입력 필드 */}
         <TextField
-          label="email"
+          label="이메일"
           type="email"
           name="email"
           variant="outlined"
@@ -140,7 +141,7 @@ export default function SignIn() {
           margin="normal"
         />
         <TextField
-          label="password"
+          label="비밀번호"
           type="password"
           name="password"
           variant="outlined"
@@ -150,19 +151,19 @@ export default function SignIn() {
           margin="normal"
         />
 
-        {errors && (
+        {error && (
           <Typography color='error' mt={2}>
-            {errors}
+            {error}
           </Typography>
         )}
       </CardContent>
-    {/* 회원가입 버튼 */}
-    <CardActions>
-        <Button
-          onClick={handleSignIn}
-          fullWidth
-          variant="contained"
-          color="primary"
+
+      <CardActions>
+        <Button 
+          onClick={handleSignIn} 
+          fullWidth 
+          variant='contained' 
+          color='primary'
         >
           로그인
         </Button>

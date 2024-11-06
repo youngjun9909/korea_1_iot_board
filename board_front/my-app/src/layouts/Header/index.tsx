@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuthStore from "../../stroes/auth.store";
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { Cookies, useCookies } from "react-cookie";
 import useThemeStore from "../../stroes/theme.store";
 
 export default function Header() {
@@ -12,7 +12,13 @@ export default function Header() {
   const {toggleTheme, theme} = useThemeStore();
 
   // 사용자의 토큰을 관리하는 쿠키
-  const [, setCookies] = useCookies(['token'])
+  const [cookies, setCookies] = useCookies(['token'])
+
+  useEffect(() => {
+    if(!cookies.token) {
+      logout();
+    } 
+  },[cookies.token, logout])
 
   // 이벤트 핸들러
   const handleLogoutClick = () => {
