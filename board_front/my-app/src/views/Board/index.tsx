@@ -30,6 +30,7 @@ export default function Board() {
       const data = response.data.data;
       setPosts(data.content);
       setTotalPages(data.totalPages);
+
     }catch(e) {
       console.error('Failed to fetch posts data', e);
     } 
