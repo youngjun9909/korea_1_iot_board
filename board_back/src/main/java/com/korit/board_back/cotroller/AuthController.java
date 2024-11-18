@@ -6,7 +6,7 @@ import com.korit.board_back.dto.auth.request.LoginRequestDto;
 import com.korit.board_back.dto.auth.request.SignUpRequestDto;
 import com.korit.board_back.dto.auth.response.LoginResponseDto;
 import com.korit.board_back.dto.auth.response.SignUpResponseDto;
-import com.korit.board_back.service.implement.AuthServiceImplement;
+import com.korit.board_back.service.implement.AuthServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
     
-    private final AuthServiceImplement authServiceImplement;
+    private final AuthServiceImpl authServiceImplement;
 
     private static final String SIGN_UP_PATH = "/signUp";
     private static final String LOGIN_PATH = "/login";

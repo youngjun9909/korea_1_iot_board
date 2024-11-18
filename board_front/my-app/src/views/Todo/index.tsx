@@ -7,7 +7,7 @@ import ProgressBar from '../../component/ProgressBar';
 import TaskForm from '../../component/TaskForm';
 import TaskList from '../../component/TaskList';
 
-export default function Index() {
+export default function Todo() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const loadTasks = async () => {
