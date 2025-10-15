@@ -1,6 +1,7 @@
 package com.korit.board_back.service.implement;
 
-import com.korit.board_back.common.ResponseMessage;
+import
+  com.korit.board_back.common.ResponseMessage;
 import com.korit.board_back.dto.ResponseDto;
 import com.korit.board_back.dto.article.request.ArticleCreateRequestDto;
 import com.korit.board_back.dto.article.request.ArticleUpdateRequestDto;
