@@ -10,7 +10,7 @@ export default function Test() {
   const [datas, setDatas] = useState<TestType[]>([])
 
   const loadData = async() => {
-    const response = await axios.get<{data: TestType[]}>("http://localhost:8080/api/v1/test");
+    const response = await axios.get<{data: TestType[]}>("http://192.168.0.100:8080/api/v1/tests/test");
     const testData = response.data.data;
     setDatas(testData);
   }

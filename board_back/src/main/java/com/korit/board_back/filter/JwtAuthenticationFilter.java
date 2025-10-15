@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             
             if (request.getRequestURI().startsWith("/api/v1/tests")) {
-            	chain.doFilter(request, response);
+            	filterChain.doFilter(request, response);
             	return;
             }
 

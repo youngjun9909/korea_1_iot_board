@@ -9,25 +9,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TestService {
 
   private final TestRepository testRepository;
-  private final ObjectPostProcessor<Object> objectPostProcessor;
 
-  public ResponseDto<ResponseTestDto> getTest() {
-    ResponseTestDto data = null;
+  public ResponseDto<List<ResponseTestDto>> getTest() {
 
+    List<Test> tests;
     try {
-      Optional<Test> optionalTest = testRepository.findAll().stream().findFirst();
-      data = new ResponseTestDto(optionalTest.get());
+      tests = testRepository.findAll();
     } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+      e.printStackTrace();
+      return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
     }
-    return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+
+    // Test → ResponseTestDto 변환
+    List<ResponseTestDto> responseList = tests.stream()
+      .map(ResponseTestDto::new)
+      .toList();
+
+    return ResponseDto.setSuccess(ResponseMessage.SUCCESS, responseList);
   }
 }

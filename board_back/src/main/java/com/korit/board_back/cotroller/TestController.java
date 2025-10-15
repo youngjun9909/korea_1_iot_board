@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -23,11 +25,12 @@ public class TestController {
   private final TestService testService;
 
   @GetMapping("/test")
-  public ResponseEntity<ResponseDto<ResponseTestDto>> getTest() {
-    ResponseDto<ResponseTestDto> response = testService.getTest();
+  public ResponseEntity<ResponseDto<List<ResponseTestDto>>> getTest() {
+    ResponseDto<List<ResponseTestDto>> response = testService.getTest();
     HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.FORBIDDEN;
     return ResponseEntity.status(status).body(response);
   }
+
 
   @GetMapping
   @PermitAll
