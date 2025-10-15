@@ -44,6 +44,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
+            
+            if (request.getRequestURI().startsWith("/api/v1/tests")) {
+            	chain.doFilter(request, response);
+            	return;
+            }
 
             String userId = jwtProvider.getUserIdFromJwt(token);
 
