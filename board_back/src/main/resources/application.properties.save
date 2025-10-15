@@ -1,11 +1,10 @@
 spring.application.name=board_back
 
-# ?? ?? ??
 server.port=8080
 
 spring.datasource.url=jdbc:mysql://localhost:3306/board_db
 spring.datasource.username=root
-spring.datasource.password=pyj
+spring.datasource.pass
 
 # ?????? ?? ? DB ???? ??? ????? ??
 spring.jpa.hibernate.ddl-auto=update

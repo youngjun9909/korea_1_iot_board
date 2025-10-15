@@ -57,13 +57,15 @@ public class WebSecurityConfig {
     }
 
 
+   O
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-            return http
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    return http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(withDefaults())
             .authorizeHttpRequests(auth -> auth
-                    .anyRequest().permitAll()) // 모든 요청 허용
+                     .anyRequest().permitAll()) // 모든 요청 허용
             .build();
 }
 
